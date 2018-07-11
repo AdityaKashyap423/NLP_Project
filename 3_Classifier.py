@@ -12,7 +12,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
 from sklearn.externals import joblib
 
-number_of_files = 2
+number_of_files = 1
 
 min_author_count = 100
 max_author_count = 400
@@ -57,8 +57,8 @@ for j in range(len(gender)):
     
     for i in range(len(input_data)):
         input_data[i] = input_data[i][input_data[i]["author"].isin(allowed_authors)]
-        input_data[i] = pd.DataFrame(input_data[i].groupby('author')['body'].apply(lambda x: "{%s}" % '\n'.join(x.astype(unicode))))
-    
+#        input_data[i] = pd.DataFrame(input_data[i].groupby('author')['body'].apply(lambda x: "{%s}" % '\n'.join(x.astype(unicode))))             
+        input_data[i] = pd.DataFrame(input_data[i].groupby('author')['body'].apply(lambda x: "{%s}" % '\n'.join(x.astype(str))))
 
     extra_input = []
     for author in author_high_count:
@@ -68,7 +68,8 @@ for j in range(len(gender)):
     
 #    final_data = pd.concat(input_data,axis=0)
     final_data = pd.concat(input_data + [extra_input],axis=0)
-    final_data = pd.DataFrame(final_data.groupby('author')['body'].apply(lambda x: "{%s}" % '\n'.join(x.astype(unicode))))
+#    final_data = pd.DataFrame(final_data.groupby('author')['body'].apply(lambda x: "{%s}" % '\n'.join(x.astype(unicode))))
+    final_data = pd.DataFrame(final_data.groupby('author')['body'].apply(lambda x: "{%s}" % '\n'.join(x.astype(str))))
     final_data = final_data.body.str.replace('I am a man', ' ')
     final_data = pd.DataFrame(final_data)
     final_data = list(final_data.fillna(' ')["body"])
