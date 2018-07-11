@@ -11,6 +11,7 @@ from datetime import datetime
 from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
 from sklearn.externals import joblib
+import csv
 
 number_of_files = 1
 
@@ -23,15 +24,15 @@ text_data = []
 
 for j in range(len(gender)):
     start= datetime.now()
-    filename1 = "../Data/" + gender[j] + "_2017_0"
+    filename1 = "../" + gender[j] + "_2017_0"
     
     input_data = []
     for i in range(number_of_files):
         filename = filename1 + str(i+1) + ".csv"
         if i >=9:
             filename = filename1[:-1] + str(i+1) + ".csv"
-#        input_data.append(pd.read_csv(filename,encoding='utf-8'))
-        input_data.append(pd.read_csv(open(filename,'rU'), encoding='utf-8', engine='c'))
+#        input_data.append(pd.read_csv(filename,encoding='utf-8',quoting=csv.QUOTE_NONE))
+        input_data.append(pd.read_csv(open(filename,'rU'), encoding='utf-8'))
     all_input_data = pd.concat(input_data,axis=0)
     
     allowed_authors = []
@@ -123,4 +124,4 @@ clf = LogisticRegression()
 clf.fit(X_data_train,y_train)
 joblib.dump(clf, 'CLF_Test.pkl')
 y_pred = clf.predict(X_data_test)
-print(accuracy_score(y_pred,y_test))
+print(accuracy_score(y_pred,y_test)

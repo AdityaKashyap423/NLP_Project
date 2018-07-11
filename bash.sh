@@ -15,5 +15,4 @@
 # export environment variables to job
 #$ -V
 
-
-python Classifier.py
+python 3_Classifier.py
