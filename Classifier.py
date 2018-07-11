@@ -20,10 +20,9 @@ gender = ["M","F"]
 gender_phrase = ["I am a man","I am a woman"]
 
 text_data = []
-
 for j in range(len(gender)):
     start= datetime.now()
-    filename1 = "../Data/" + gender[j] + "_2017_0"
+    filename1 = "../" + gender[j] + "_2017_0"
     
     input_data = []
     for i in range(number_of_files):
