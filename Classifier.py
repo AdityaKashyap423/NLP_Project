@@ -10,8 +10,9 @@ import pandas as pd
 from datetime import datetime
 from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
+from sklearn.externals import joblib
 
-number_of_files = 6
+number_of_files = 2
 
 min_author_count = 100
 max_author_count = 400
@@ -105,7 +106,7 @@ cv = CountVectorizer(stop_words = "english",lowercase = True,ngram_range=(1,3),m
 #cv = TfidfVectorizer(stop_words = "english",lowercase = True,ngram_range=(1,3))
 X_data_train = cv.fit_transform(data)
 end = datetime.now()
-
+joblib.dump(cv, 'CV_Test.pkl') 
 print(end-start)
 print("PREPROCESSING DONE - STARTING TRAINING")
 
@@ -119,5 +120,6 @@ X_data_test = cv.transform(data_test).toarray()
 
 clf = LogisticRegression()
 clf.fit(X_data_train,y_train)
+joblib.dump(cv, 'CLF_Test.pkl')
 y_pred = clf.predict(X_data_test)
 print(accuracy_score(y_pred,y_test))
