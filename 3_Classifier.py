@@ -13,10 +13,10 @@ import numpy as np
 from sklearn.externals import joblib
 import csv
 
-number_of_files = 1
+number_of_files = 12
 
 min_author_count = 100
-max_author_count = 400
+max_author_count = 1000
 gender = ["M","F"]
 gender_phrase = ["I am a man","I am a woman"]
 
@@ -29,11 +29,15 @@ for j in range(len(gender)):
     
     input_data = []
     for i in range(number_of_files):
-        filename = filename1 + str(i+1) + ".csv"
-        if i >=9:
-            filename = filename1[:-1] + str(i+1) + ".csv"
-#        input_data.append(pd.read_csv(filename,encoding='utf-8',quoting=csv.QUOTE_NONE))
-        input_data.append(pd.read_csv(open(filename,'rU'), encoding='utf-8',dtype={'author':str,'body':str}))
+        try:
+            filename = filename1 + str(i+1) + ".csv"
+            if i >=9:
+                filename = filename1[:-1] + str(i+1) + ".csv"
+    #        input_data.append(pd.read_csv(filename,encoding='utf-8',quoting=csv.QUOTE_NONE))
+            input_data.append(pd.read_csv(open(filename,'rU'), encoding='utf-8',engine="c",dtype={'author':str,'body':str},low_memory=False))      
+            print(filename)
+        except:
+            print("ERROR Loading File: " + filename)
 
     all_input_data = pd.concat(input_data,axis=0)
     
@@ -108,7 +112,7 @@ cv = CountVectorizer(stop_words = "english",lowercase = True,ngram_range=(1,3),m
 #cv = TfidfVectorizer(stop_words = "english",lowercase = True,ngram_range=(1,3))
 X_data_train = cv.fit_transform(data)
 end = datetime.now()
-joblib.dump(cv, 'CV_Test.pkl') 
+joblib.dump(cv, 'CV_Gender.pkl') 
 print(end-start)
 print("PREPROCESSING DONE - STARTING TRAINING")
 
@@ -122,6 +126,6 @@ X_data_test = cv.transform(data_test).toarray()
 
 clf = LogisticRegression()
 clf.fit(X_data_train,y_train)
-joblib.dump(clf, 'CLF_Test.pkl')
+joblib.dump(clf, 'CLF_Gender.pkl')
 y_pred = clf.predict(X_data_test)
 print(accuracy_score(y_pred,y_test))
