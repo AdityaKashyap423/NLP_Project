@@ -33,7 +33,7 @@ for j in range(len(gender)):
         if i >=9:
             filename = filename1[:-1] + str(i+1) + ".csv"
 #        input_data.append(pd.read_csv(filename,encoding='utf-8',quoting=csv.QUOTE_NONE))
-        input_data.append(pd.read_csv(open(filename,'rU'), encoding='utf-8',engine="c",dtype={'author':str,'body':str},low_memory=False)
+        input_data.append(pd.read_csv(open(filename,'rU'), encoding='utf-8',engine="c",dtype={'author':str,'body':str},low_memory=False))
         print(filename)
 
     all_input_data = pd.concat(input_data,axis=0)

@@ -1,0 +1,20 @@
+stty: 'standard input': Inappropriate ioctl for device
+Traceback (most recent call last):
+  File "3_Classifier.py", line 36, in <module>
+    input_data.append(pd.read_csv(open(filename,'rU'), encoding='utf-8',engine="c",dtype={'author':str,'body':str},low_memory=False))
+  File "/home1/k/kashyap/miniconda3/lib/python3.6/site-packages/pandas/io/parsers.py", line 709, in parser_f
+    return _read(filepath_or_buffer, kwds)
+  File "/home1/k/kashyap/miniconda3/lib/python3.6/site-packages/pandas/io/parsers.py", line 455, in _read
+    data = parser.read(nrows)
+  File "/home1/k/kashyap/miniconda3/lib/python3.6/site-packages/pandas/io/parsers.py", line 1069, in read
+    ret = self._engine.read(nrows)
+  File "/home1/k/kashyap/miniconda3/lib/python3.6/site-packages/pandas/io/parsers.py", line 1839, in read
+    data = self._reader.read(nrows)
+  File "pandas/_libs/parsers.pyx", line 905, in pandas._libs.parsers.TextReader.read
+  File "pandas/_libs/parsers.pyx", line 1001, in pandas._libs.parsers.TextReader._read_rows
+  File "pandas/_libs/parsers.pyx", line 1130, in pandas._libs.parsers.TextReader._convert_column_data
+  File "pandas/_libs/parsers.pyx", line 1160, in pandas._libs.parsers.TextReader._convert_tokens
+  File "pandas/_libs/parsers.pyx", line 1269, in pandas._libs.parsers.TextReader._convert_with_dtype
+  File "pandas/_libs/parsers.pyx", line 1297, in pandas._libs.parsers.TextReader._string_convert
+  File "pandas/_libs/parsers.pyx", line 1539, in pandas._libs.parsers._string_box_utf8
+MemoryError
